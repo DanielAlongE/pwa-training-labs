@@ -128,9 +128,18 @@ headButton.addEventListener('click', headRequest);
 /* NOTE: Never send unencrypted user credentials in production! */
 function postRequest() {
   const formData = new FormData(document.getElementById('msg-form'));
-  fetch('http://localhost:5001/', {
+  const headers = new Headers();
+
+  headers.append('Content-Type', 'application/json');
+
+  console.log({headers});
+
+  fetch('http://localhost:5000/', {
     method: 'POST',
-    body: formData //'name=david&message=hello'
+    body: JSON.stringify(formData),
+    //formData, //'name=david&message=hello'
+    headers
+    //mode: 'no-cors'
   })
     .then(validateResponse)
     .then(readResponseAsText)
