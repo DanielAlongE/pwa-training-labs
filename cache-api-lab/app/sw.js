@@ -23,7 +23,7 @@ self.addEventListener('install', event => {
 
 self.addEventListener('fetch', event => {
     console.log('Fetch event for ', event.request.url);
-    console.log('Fetch request ', event.request);
+    //console.log('Fetch request ', event.request);
 
     event.respondWith(
         caches.match(event.request)
@@ -35,18 +35,24 @@ self.addEventListener('fetch', event => {
 
                 console.log('Network request for ', event.request.url);
                 return fetch(event.request)
-                    .then(response => {
-                        return caches.open(staticCacheName)
-                            .then(cache => {
-                                cache.put(event.request.url, response.clone());
-                                return response;
-                            });
-                    })
-          
-                // TODO 4 - Add fetched files to the cache
+                        .then(response => {
+                            // TODO 5 - Respond with custom 404 page 
+                            if(response.status == 404){
+                                //throw Error(response.statusText);
+                                return caches.match('pages/404.html')
+                            }
+
+                            return caches.open(staticCacheName)
+                                .then(cache => {
+                                    cache.put(event.request.url, response.clone());
+                                    return response;
+                                });
+                        })
+
           
             }).catch(error => {
-                      // TODO 6 - Respond with custom offline page
+                console.log('Error, ', error);
+                return caches.match('pages/offline.html')
 
             })
     );
