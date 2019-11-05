@@ -76,3 +76,8 @@ footer {
   text-align: center;
   width: 100%;
 }
+
+html:not([lang]),html[lang=""] { border-top: 20px solid red; } 
+img:not([alt]),img[alt=""] { border: 5px dashed red; } 
+canvas:not([role]),canvas:not([aria-label]),canvas[role=""],canvas[aria-label=""] { border: 5px dashed red; } 
+
