@@ -7,7 +7,7 @@ const filesToCache = [
     'pages/404.html'
   ];
   
-const staticCacheName = 'pages-cache-v1';
+const staticCacheName = 'pages-cache-v2';
   
 
 self.addEventListener('install', event => {
